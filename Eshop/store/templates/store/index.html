@@ -1,0 +1,63 @@
+{% extends 'store/base.html' %}
+{% load cart %}
+{% load currency_symbol %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+	<div class="row mx-auto">
+		<div class="col-lg-3">
+			<div class="list-group">
+				<a href="/" class="list-group-item list-group-item-action ">All</a>
+				{% for categ in categories %}
+				<a href="?category={{categ.id}}"
+					class="list-group-item list-group-item-action {{type}}">{{categ.name}}</a>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-lg-9">
+			<div class="row mx-auto">
+				{% for product in products %}
+				<div class="card mx-auto mb-3 p-0" id="{{product.id}}" style="width: 18rem;">
+					<img class="card-img-top" src="{{product.image.url}}" alt="">
+					<div class="card-body">
+						<p class="card-title">{{product.name}}</p>
+						<p class="card-text"><b>{{product.price|currency}}</b></p>
+						<!-- {% if request.session.cart %}{{product|IsInCart:request.session.cart}}{% endif %} -->
+
+					</div>
+					<div class="card-footer p-0 no-gutters">
+						{% if product|IsInCart:request.session.cart %}
+						<div class="row mx-0">
+							<form action="" method="post" class="col-2 p-0">
+								{% csrf_token %}
+								<input type="text" name="product" id="" value="{{product.id}}" hidden>
+								<input type="text" name="remove" id="" value="True" hidden>
+								<input type="submit" value="-" class="btn btn-light border form-control">
+							</form>
+							<div class="text-center col mt-1">{{ product|item_count:request.session.cart }}</div>
+							<form action="" method="post" class="col-2 p-0">
+								{% csrf_token %}
+								<input type="text" name="product" id="" value="{{product.id}}" hidden>
+								<input type="submit" value="+" class="btn btn-light border form-control">
+							</form>
+						</div>
+						{% else %}
+						<form action="/#{{product.id}}" method="post" class="btn-block">
+							{% csrf_token %}
+							<input type="text" name="product" id="" value="{{product.id}}" hidden>
+							<input type="submit" class="btn btn-light form-control" value="Add to Cart">
+						</form>
+						{% endif %}
+
+
+
+					</div>
+
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

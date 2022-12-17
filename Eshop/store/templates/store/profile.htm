@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <center>
+        <h3>User {{name}}</h3>
+        <a href="/logout/"><button style="background: rgb(118, 227, 118);">logout</button></a><br>
+        {% if messages %}
+        {% for msg in messages %}{{msg}}{% endfor %}
+        {% endif %}<br>
+        <a href="/changepass/"><button style="background: rgb(119, 231, 88);">Change Password</button></a><br>
+        <br><br><br>
+        <hr width="50%" size="5px">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {%if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            {% endif %}
+            {% for fm in form %}
+            {{fm.label_tag}}<br>{{fm}}{{fm.errors|striptags}}<br><br>
+            {% endfor %}
+            <input type="submit" value="SAVE">
+        </form>
+    </center>
+    </body>
+
+</html>

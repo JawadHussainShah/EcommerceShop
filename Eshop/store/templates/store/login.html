@@ -1,0 +1,33 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="container-fluid">
+  <div class="m-4 p-4">
+    <div class="col-lg-4 mx-auto border rounded p-4">
+      <h4 class="alert alert-light border rounded text-center">Login Page</h4>
+      {% for message in messages %}
+      <p class="alert alert-{{message.tags}}">{{message}}</p>
+      {% endfor %}
+      <form method="post">
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+          {% for fm in form %}
+          <div class="mb-3">
+            {{fm.label}}
+            {{fm}}
+            <small class="text-danger">{{fm.errors|striptags}}</small>
+          </div>
+          {% endfor %}
+        {% if form.non_field_errors %}
+         {% for error in form.non_field_errors %}<p class="alert alert-danger my-3">{{error}}</p>{% endfor %}
+        {% endif %}
+        <div class="text text-center">
+          
+        <button type="submit" class="btn btn-primary col-sm-12">Login</button>
+
+        </div>
+      </form>
+      <a class="btn btn-info mt-2" href="{% url 'password_reset' %}">Forgot Password</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

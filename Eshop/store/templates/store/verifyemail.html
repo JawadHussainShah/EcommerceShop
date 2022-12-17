@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+</head>
+<body>
+    <center>
+        <div style="padding-top: 50px;">
+            {% for message in messages %}
+            <h3 style="color: lightgreen;">{{message}}</h3>
+            {%endfor%}
+            {% if useremail.verify %}
+             <a href="/login/"><button>Lgoin</button></a>
+            {% elif invalid_link != None %}
+            <h3 style="color: red;">{{invalid_link}}</h3>
+            {%else%}
+            <form action="" method="post">
+                {% csrf_token %} 
+                <h3>Kindly click the below button for email confirmation</h3>
+                <input type="submit" name="" id="" value="Confirm Email" style="
+                background-color: rgb(15, 236, 66);
+                font-size: medium;
+                border: 1px solid;border-radius: 15px;height: 40px;margin-top: 40px;
+                ">
+            </form>
+            {%endif%}
+        </div>
+    </center>
+</body>
+</html>

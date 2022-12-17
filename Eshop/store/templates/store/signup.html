@@ -1,0 +1,27 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="m-4 p-4">
+    <div class="col-lg-4 mx-auto border rounded p-4">
+      <h4 class="alert alert-light border rounded text-center">Create an Account</h4>
+      {% for message in messages %}
+      <p class="alert alert-{{message.tags}}">{{message}}</p>
+      {% endfor %}
+      <form method="post">
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+          {% for fm in form %}
+          <div class="mb-3">
+            {{fm.label}}
+            {{fm}}
+            <small class="text-danger">{{fm.errors|striptags}}</small>
+          </div>
+          {% endfor %}
+        <button type="submit" class="btn btn-primary">Create an Account</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
